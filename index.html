@@ -3,260 +3,531 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dih packs - Sticky Note Store</title>
+    <title>Dih Packs - Sticky Note Store</title>
+    <!-- Load Tailwind CSS via CDN for a modern, advanced look -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS is embedded here for a single-file solution */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-            background-color: #f0f0f0;
-            line-height: 1.6;
-            color: #333;
-        }
-        .site-header, .site-footer {
-            background-color: #2c2c2c;
-            color: #fff;
-            padding: 1rem 0;
-        }
-        .header-container, .section-container, .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        .site-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .site-header h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-        .site-header nav ul {
-            list-style: none;
-        }
-        .site-header nav ul li {
-            display: inline-block;
-            margin-left: 2rem;
-        }
-        .site-header nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        .site-header nav a:hover {
-            color: #a0a0a0;
+            font-family: 'Inter', sans-serif;
+            @apply bg-gray-100 text-gray-800;
         }
         .hero-section {
-            background-color: #fff;
-            text-align: center;
-            padding: 6rem 2rem;
-            border-bottom: 2px solid #ddd;
+            background-image: url('https://placehold.co/1920x600/e5e7eb/6b7280?text=Sticky+Notes');
+            background-position: center;
+            background-size: cover;
+            background-blend-mode: multiply;
         }
-        .hero-content h2 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #333;
+        .order-form-container {
+            transition: max-height 0.3s ease-out;
+            max-height: 0;
+            overflow: hidden;
         }
-        .hero-content p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
+        .order-form-container.active {
+            max-height: 500px; /* Adjust to fit content */
         }
-        .cta-button {
-            display: inline-block;
-            background-color: #2c2c2c;
-            color: #fff;
-            text-decoration: none;
-            padding: 0.75rem 2rem;
-            border-radius: 5px;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
+        .status-badge {
+            @apply px-2 py-1 rounded-full text-xs font-semibold;
         }
-        .cta-button:hover {
-            background-color: #000;
+        .status-badge.pending {
+            @apply bg-yellow-400 text-yellow-900;
         }
-        .products-section, .about-section, .contact-section {
-            padding: 4rem 0;
+        .status-badge.fulfilled {
+            @apply bg-blue-400 text-blue-900;
         }
-        .products-section {
-            background-color: #f9f9f9;
-        }
-        h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #333;
-        }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        .product-card {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-        .product-card img {
-            width: 100%;
-            max-width: 300px;
-            height: auto;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-        }
-        .product-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .price {
-            font-size: 1.25rem;
-            color: #888;
-            margin-bottom: 0.5rem;
-        }
-        .description {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 1rem;
-        }
-        .add-to-cart {
-            background-color: #2c2c2c;
-            color: #fff;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-        }
-        .add-to-cart:hover {
-            background-color: #000;
-        }
-        .about-section {
-            background-color: #fff;
-            text-align: center;
-        }
-        .about-section p, .contact-section p {
-            max-width: 800px;
-            margin: 0 auto;
-            font-size: 1.1rem;
-        }
-        .contact-section a {
-            color: #2c2c2c;
-            text-decoration: underline;
-        }
-        .site-footer {
-            text-align: center;
-            padding: 2rem 0;
-        }
-        @media (max-width: 768px) {
-            .site-header {
-                flex-direction: column;
-                text-align: center;
-            }
-            .site-header nav ul {
-                margin-top: 1rem;
-            }
-            .site-header nav ul li {
-                margin: 0 0.5rem;
-            }
-            .hero-content h2 {
-                font-size: 2rem;
-            }
-            .section-container {
-                padding: 0 1rem;
-            }
+        .status-badge.delivered {
+            @apply bg-green-400 text-green-900;
         }
     </style>
 </head>
-<body>
+<body class="antialiased">
 
-    <header class="site-header">
-        <div class="header-container">
-            <h1>dih packs</h1>
-            <nav>
-                <ul>
-                    <li><a href="#products">Products</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-gray-900">Dih Packs</h1>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#products" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Products</a>
+                <a href="#about" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">About Us</a>
+                <a href="#contact" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">Contact</a>
             </nav>
+            <button class="md:hidden p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
         </div>
     </header>
 
     <main>
-        <section class="hero-section">
-            <div class="hero-content">
-                <h2>The sticky notes that stick with you.</h2>
-                <p>Explore our unique range of "dih" sticky note packs.</p>
-                <a href="#products" class="cta-button">Shop Now</a>
+        <!-- Hero Section -->
+        <section class="hero-section bg-gray-800 text-white text-center py-20 md:py-32 rounded-b-3xl mx-2 md:mx-4">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl md:text-6xl font-extrabold mb-4 animate-fade-in-up">Home of Dih Packs</h2>
+                <p class="text-lg md:text-xl mb-8 opacity-90 animate-fade-in-up">The sticky notes that stick with you. Explore our unique range of "dih" sticky note packs.</p>
+                <a href="#products" class="inline-block bg-white text-gray-900 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105">Shop Now</a>
             </div>
         </section>
 
-        <section id="products" class="products-section">
-            <div class="section-container">
-                <h2>Our Packs</h2>
-                <div class="product-grid">
+        <!-- Products Section -->
+        <section id="products" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-extrabold text-center mb-12">Our Packs</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x300?text=dih+pack+standard" alt="dih pack standard">
-                        <h3>dih pack standard</h3>
-                        <p class="price">$5.99</p>
-                        <p class="description">Classic sticky notes for all your note-taking needs. 100 sheets per pad.</p>
-                        <button class="add-to-cart">Add to Cart</button>
+                    <!-- Product Card: dih pack standard -->
+                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 flex flex-col justify-between items-center text-center">
+                        <img class="w-full max-w-xs h-auto mb-4 rounded-lg object-cover" src="https://placehold.co/400x400/fff176/6d6d6d?text=dih+pack+standard" alt="dih pack standard">
+                        <h3 class="text-2xl font-semibold mb-2">dih pack standard</h3>
+                        <p class="text-xl font-bold text-gray-700 mb-2">$0.75</p>
+                        <p class="text-sm text-gray-500 mb-4 flex-grow">A standard pack of dihs.</p>
+                        <button class="add-to-cart w-full bg-gray-900 text-white py-3 px-6 rounded-full font-semibold hover:bg-gray-700 transition-colors duration-200 transform hover:scale-105" data-product="dih pack standard" data-price="0.75">Add Order</button>
                     </div>
 
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x300?text=dih+pack+dihformed" alt="dih pack dihformed">
-                        <h3>dih pack dihformed</h3>
-                        <p class="price">$7.99</p>
-                        <p class="description">Uniquely shaped sticky notes for creative thinkers. Assorted shapes.</p>
-                        <button class="add-to-cart">Add to Cart</button>
+                    <!-- Product Card: dih pack dihformed -->
+                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 flex flex-col justify-between items-center text-center">
+                        <img class="w-full max-w-xs h-auto mb-4 rounded-lg object-cover" src="https://placehold.co/400x400/9b59b6/ecf0f1?text=dih+pack+dihformed" alt="dih pack dihformed">
+                        <h3 class="text-2xl font-semibold mb-2">dih pack dihformed</h3>
+                        <p class="text-xl font-bold text-gray-700 mb-2">$1.25</p>
+                        <p class="text-sm text-gray-500 mb-4 flex-grow">Deformed dihs in different shapes.</p>
+                        <button class="add-to-cart w-full bg-gray-900 text-white py-3 px-6 rounded-full font-semibold hover:bg-gray-700 transition-colors duration-200 transform hover:scale-105" data-product="dih pack dihformed" data-price="1.25">Add Order</button>
                     </div>
 
-                    <div class="product-card">
-                        <img src="https://via.placeholder.com/300x300?text=dih+pack+dihcolored" alt="dih pack dihcolored">
-                        <h3>dih pack dihcolored</h3>
-                        <p class="price">$6.99</p>
-                        <p class="description">A vibrant mix of colors to brighten up your desk. 5 pads per pack.</p>
-                        <button class="add-to-cart">Add to Cart</button>
+                    <!-- Product Card: dih pack dihcolored -->
+                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 flex flex-col justify-between items-center text-center">
+                        <img class="w-full max-w-xs h-auto mb-4 rounded-lg object-cover" src="https://placehold.co/400x400/3498db/ffffff?text=dih+pack+dihcolored" alt="dih pack dihcolored">
+                        <h3 class="text-2xl font-semibold mb-2">dih pack dihcolored</h3>
+                        <p class="text-xl font-bold text-gray-700 mb-2">$1.50</p>
+                        <p class="text-sm text-gray-500 mb-4 flex-grow">Strangely and uniquely colored dihs.</p>
+                        <button class="add-to-cart w-full bg-gray-900 text-white py-3 px-6 rounded-full font-semibold hover:bg-gray-700 transition-colors duration-200 transform hover:scale-105" data-product="dih pack dihcolored" data-price="1.50">Add Order</button>
                     </div>
 
                 </div>
             </div>
         </section>
 
-        <section id="about" class="about-section">
-            <div class="section-container">
-                <h2>About Us</h2>
-                <p>At dih packs, we believe in the power of a good sticky note. We create unique, high-quality sticky notes that help you stay organized and express your creativity. Our "dih" brand is all about embracing the unconventional and finding new ways to make your ideas stick.</p>
+        <!-- Order Modal (hidden by default) -->
+        <div id="orderModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full mx-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-2xl font-bold text-gray-900">Complete Your Order</h3>
+                    <button id="closeModal" class="text-gray-500 hover:text-gray-800 transition-colors duration-200">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div id="modalContent">
+                    <!-- Order details will be injected here by JavaScript -->
+                    <form id="orderForm" class="mt-4 space-y-4">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
+                            <input type="text" id="name" name="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                        </div>
+                        <div>
+                            <label for="location" class="block text-sm font-medium text-gray-700">Location & Time</label>
+                            <select id="location" name="location" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                                <option value="" disabled selected>Select a location</option>
+                                <option value="Morning (Cafeteria)">Morning (Cafeteria)</option>
+                                <option value="Lunch (8th Grade, Cafeteria)">Lunch (8th Grade, Cafeteria)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-indigo-700 transition-colors duration-200">Place Order</button>
+                    </form>
+                </div>
+                <div id="successMessage" class="hidden text-center mt-4">
+                    <p class="text-green-600 text-lg font-bold">Order submitted successfully!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Panel Modal (hidden by default) -->
+        <div id="adminPanelModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-xl shadow-2xl p-8 max-w-2xl w-full mx-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-2xl font-bold text-gray-900">Admin Panel - User ID: <span class="text-sm font-normal text-gray-600" id="adminUserId"></span></h3>
+                    <button id="closeAdminModal" class="text-gray-500 hover:text-gray-800 transition-colors duration-200">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div id="adminContent">
+                    <form id="passwordForm" class="space-y-4">
+                        <div>
+                            <label for="adminPassword" class="block text-sm font-medium text-gray-700">Enter Admin Password</label>
+                            <input type="password" id="adminPassword" name="adminPassword" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                        </div>
+                        <button type="submit" class="w-full bg-gray-900 text-white py-2 px-4 rounded-md font-semibold hover:bg-gray-700 transition-colors duration-200">Submit</button>
+                    </form>
+                    <div id="ordersList" class="hidden mt-6 space-y-4">
+                        <h4 class="text-xl font-bold">Recent Orders</h4>
+                        <div id="ordersContainer" class="space-y-4 max-h-96 overflow-y-auto">
+                            <!-- Orders will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <section id="about" class="py-16 bg-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl font-extrabold mb-8">About Us</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600">Our team of dedicated "dih-scoverers" are not just selling sticky notes; we're in the business of collecting rare and valuable dihs that are hard to acquire. These aren't for organization; they're for the thrill of the hunt. Each pack holds the promise of a unique find, and if you are lucky, you might just get a one-of-a-kind mythical dih.</p>
             </div>
         </section>
 
-        <section id="contact" class="contact-section">
-            <div class="section-container">
-                <h2>Get In Touch</h2>
-                <p>Have a question or just want to say hi? Contact us at <a href="mailto:hello@dihpacks.com">hello@dihpacks.com</a>.</p>
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl font-extrabold mb-8">Get In Touch</h2>
+                <p class="max-w-2xl mx-auto text-lg text-gray-600">Have a question or just want to say hi? We'd love to hear from you. Feel free to contact us at <a href="mailto:hello@dihpacks.com" class="text-indigo-600 hover:underline">hello@dihpacks.com</a>.</p>
             </div>
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-container">
-            <p>&copy; 2025 dih packs. All rights reserved.</p>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-4 text-center text-sm text-gray-400">
+            <p>&copy; 2025 Dih Packs. All rights reserved.</p>
+            <p class="mt-2 text-xs">This is supplied by 3 people that will be undisclosed for security purposes and to prevent snitches.</p>
         </div>
     </footer>
 
+    <!-- JavaScript for Firebase and the application logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
+
+        // Global variables for Firebase
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        // Use the provided Firebase configuration
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+
+        let db;
+        let auth;
+        let userId;
+
+        // --- IMPORTANT: REPLACE WITH YOUR OWN DISCORD WEBHOOK URL ---
+        const webhookUrl = 'https://discordapp.com/api/webhooks/1403855383193456681/6_48vuqKdyd18SOwerezdW-ycG-ZenwQNHwfO_q6vHcrzVCyfWKXCjkgAbX4b4mlRTDb';
+        
+        // Function to initialize Firebase and set up all application logic
+        const initFirebase = async () => {
+            try {
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                getAnalytics(app); // Initialize analytics
+
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                userId = auth.currentUser?.uid || crypto.randomUUID();
+                console.log("Firebase initialized successfully. User ID:", userId);
+
+                // Now that Firebase is ready, set up all the app's event listeners and logic.
+                setupAppLogic();
+
+            } catch (error) {
+                console.error("Firebase initialization failed:", error);
+                // Display an error to the user if the database connection fails
+                const messageBox = document.createElement('div');
+                messageBox.className = 'fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[100]';
+                messageBox.innerHTML = `
+                    <div class="bg-white rounded-xl shadow-2xl p-6 max-w-sm text-center">
+                        <p class="text-red-500 font-bold mb-4">Connection Error</p>
+                        <p class="text-gray-800">Could not connect to the database. Please try again later.</p>
+                        <button onclick="this.parentElement.parentElement.remove()" class="mt-4 bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700">OK</button>
+                    </div>
+                `;
+                document.body.appendChild(messageBox);
+            }
+        };
+
+        // Function containing all the application's interactive logic
+        const setupAppLogic = () => {
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            const orderModal = document.getElementById('orderModal');
+            const closeModalButton = document.getElementById('closeModal');
+            const orderForm = document.getElementById('orderForm');
+            const successMessage = document.getElementById('successMessage');
+            let selectedProduct = null;
+
+            // Admin panel elements
+            const adminPanelModal = document.getElementById('adminPanelModal');
+            const closeAdminModalButton = document.getElementById('closeAdminModal');
+            const passwordForm = document.getElementById('passwordForm');
+            const ordersList = document.getElementById('ordersList');
+            const ordersContainer = document.getElementById('ordersContainer');
+            
+            // Show the order modal when a product is clicked
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    selectedProduct = {
+                        name: button.dataset.product,
+                        price: button.dataset.price
+                    };
+                    orderModal.classList.remove('hidden');
+                });
+            });
+
+            // Hide the order modal
+            closeModalButton.addEventListener('click', () => {
+                orderModal.classList.add('hidden');
+                orderForm.reset();
+                orderForm.classList.remove('hidden');
+                successMessage.classList.add('hidden');
+            });
+            
+            // Hide the admin modal
+            closeAdminModalButton.addEventListener('click', () => {
+                adminPanelModal.classList.add('hidden');
+                passwordForm.reset();
+                passwordForm.classList.remove('hidden');
+                ordersList.classList.add('hidden');
+                ordersContainer.innerHTML = '';
+            });
+
+            // Handle form submission and save to Firestore
+            orderForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const name = document.getElementById('name').value;
+                const location = document.getElementById('location').value;
+
+                if (!selectedProduct || !name || !location) {
+                    // Use a custom message box instead of alert()
+                    const messageBox = document.createElement('div');
+                    messageBox.className = 'fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[100]';
+                    messageBox.innerHTML = `
+                        <div class="bg-white rounded-xl shadow-2xl p-6 max-w-sm text-center">
+                            <p class="text-red-500 font-bold mb-4">Error</p>
+                            <p class="text-gray-800">Please provide your name and location.</p>
+                            <button onclick="this.parentElement.parentElement.remove()" class="mt-4 bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700">OK</button>
+                        </div>
+                    `;
+                    document.body.appendChild(messageBox);
+                    return;
+                }
+
+                // Firestore data persistence
+                try {
+                    const ordersCollectionRef = collection(db, `artifacts/${appId}/public/data/orders`);
+                    await addDoc(ordersCollectionRef, {
+                        product: selectedProduct.name,
+                        price: selectedProduct.price,
+                        customerName: name,
+                        location: location,
+                        timestamp: serverTimestamp(),
+                        status: 'pending' // Set initial status
+                    });
+                    console.log("Order saved to Firestore.");
+
+                    // Discord webhook logic (same as before)
+                    const payload = {
+                        content: `**New Order!**`,
+                        embeds: [{
+                            title: `${selectedProduct.name}`,
+                            description: `A new order has been placed.`,
+                            color: 3447003,
+                            fields: [
+                                { name: "Product", value: selectedProduct.name, inline: true },
+                                { name: "Price", value: `$${selectedProduct.price}`, inline: true },
+                                { name: "Customer Name", value: name, inline: false },
+                                { name: "Location", value: location, inline: false }
+                            ]
+                        }]
+                    };
+                    await fetch(webhookUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload),
+                    });
+
+                    // Show success message
+                    orderForm.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+                    setTimeout(() => {
+                        orderModal.classList.add('hidden');
+                        orderForm.reset();
+                        orderForm.classList.remove('hidden');
+                        successMessage.classList.add('hidden');
+                    }, 2000);
+
+                } catch (error) {
+                    console.error('Error processing order:', error);
+                    // Display a custom error message
+                    const messageBox = document.createElement('div');
+                    messageBox.className = 'fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[100]';
+                    messageBox.innerHTML = `
+                        <div class="bg-white rounded-xl shadow-2xl p-6 max-w-sm text-center">
+                            <p class="text-red-500 font-bold mb-4">Error</p>
+                            <p class="text-gray-800">There was an issue placing your order. Please try again.</p>
+                            <button onclick="this.parentElement.parentElement.remove()" class="mt-4 bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700">OK</button>
+                        </div>
+                    `;
+                    document.body.appendChild(messageBox);
+                }
+            });
+
+            // Keybind for admin panel (Shift + A + P)
+            document.addEventListener('keydown', (e) => {
+                if (e.shiftKey && e.key.toLowerCase() === 'a') {
+                    const keyHandler = (e2) => {
+                        if (e2.key.toLowerCase() === 'p') {
+                            document.getElementById('adminUserId').textContent = userId;
+                            adminPanelModal.classList.remove('hidden');
+                        }
+                        document.removeEventListener('keydown', keyHandler);
+                    };
+                    document.addEventListener('keydown', keyHandler, { once: true });
+                }
+            });
+
+            // Function to update an order's status
+            const updateOrderStatus = async (orderId, newStatus) => {
+                try {
+                    const orderRef = doc(db, `artifacts/${appId}/public/data/orders`, orderId);
+                    await updateDoc(orderRef, {
+                        status: newStatus
+                    });
+                    console.log(`Order ${orderId} status updated to ${newStatus}`);
+                } catch (error) {
+                    console.error("Error updating order status:", error);
+                    // Display a custom error message
+                    const messageBox = document.createElement('div');
+                    messageBox.className = 'fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[100]';
+                    messageBox.innerHTML = `
+                        <div class="bg-white rounded-xl shadow-2xl p-6 max-w-sm text-center">
+                            <p class="text-red-500 font-bold mb-4">Error</p>
+                            <p class="text-gray-800">Could not update the order status. Please try again.</p>
+                            <button onclick="this.parentElement.parentElement.remove()" class="mt-4 bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700">OK</button>
+                        </div>
+                    `;
+                    document.body.appendChild(messageBox);
+                }
+            };
+
+            // Password form submission for admin panel
+            passwordForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const password = document.getElementById('adminPassword').value;
+                const correctPassword = "Admin9812";
+
+                if (password === correctPassword) {
+                    passwordForm.classList.add('hidden');
+                    ordersList.classList.remove('hidden');
+                    
+                    // Start listening for real-time order updates
+                    const ordersCollectionRef = collection(db, `artifacts/${appId}/public/data/orders`);
+                    onSnapshot(ordersCollectionRef, (querySnapshot) => {
+                        const allOrders = [];
+                        querySnapshot.forEach((doc) => {
+                            allOrders.push({ id: doc.id, ...doc.data() });
+                        });
+                        
+                        const pendingOrders = [];
+                        const fulfilledOrders = [];
+                        const deliveredOrders = [];
+
+                        allOrders.forEach(order => {
+                            // Default status to 'pending' if not present
+                            const status = order.status || 'pending';
+                            if (status === 'pending') {
+                                pendingOrders.push(order);
+                            } else if (status === 'fulfilled') {
+                                fulfilledOrders.push(order);
+                            } else if (status === 'delivered') {
+                                deliveredOrders.push(order);
+                            }
+                        });
+
+                        // Sort each group by timestamp (most recent first)
+                        const sortByTimestamp = (a, b) => {
+                             const aTime = a.timestamp ? a.timestamp.seconds : 0;
+                            const bTime = b.timestamp ? b.timestamp.seconds : 0;
+                            return bTime - a.timestamp;
+                        };
+                        
+                        pendingOrders.sort(sortByTimestamp);
+                        fulfilledOrders.sort(sortByTimestamp);
+                        deliveredOrders.sort(sortByTimestamp);
+
+                        // Combine into a single sorted list
+                        const sortedOrders = [...pendingOrders, ...fulfilledOrders, ...deliveredOrders];
+                        
+                        ordersContainer.innerHTML = ''; // Clear previous orders
+
+                        if (sortedOrders.length > 0) {
+                            sortedOrders.forEach(order => {
+                                const orderElement = document.createElement('div');
+                                orderElement.className = 'bg-gray-100 p-4 rounded-lg shadow-sm';
+                                const timestamp = order.timestamp ? new Date(order.timestamp.seconds * 1000).toLocaleString() : 'N/A';
+                                const status = order.status || 'pending';
+
+                                // Determine button visibility based on status
+                                const markFulfilledButton = status === 'pending' ? `<button class="mark-fulfilled-btn bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-semibold hover:bg-blue-600 transition-colors duration-200" data-id="${order.id}">Mark Fulfilled</button>` : '';
+                                const markDeliveredButton = status === 'fulfilled' ? `<button class="mark-delivered-btn bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold hover:bg-green-600 transition-colors duration-200" data-id="${order.id}">Mark Delivered</button>` : '';
+                                
+                                orderElement.innerHTML = `
+                                    <p class="font-semibold text-gray-800">${order.customerName}</p>
+                                    <p class="text-sm text-gray-600">${order.location}</p>
+                                    <p class="text-sm text-gray-600">${order.product} - $${order.price}</p>
+                                    <div class="flex items-center space-x-2 mt-2">
+                                        <span class="status-badge ${status}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>
+                                        ${markFulfilledButton}
+                                        ${markDeliveredButton}
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">Ordered: ${timestamp}</p>
+                                `;
+                                ordersContainer.appendChild(orderElement);
+                            });
+
+                            // Add event listeners for the new buttons
+                            ordersContainer.querySelectorAll('.mark-fulfilled-btn').forEach(button => {
+                                button.addEventListener('click', async () => {
+                                    await updateOrderStatus(button.dataset.id, 'fulfilled');
+                                });
+                            });
+                            ordersContainer.querySelectorAll('.mark-delivered-btn').forEach(button => {
+                                button.addEventListener('click', async () => {
+                                    await updateOrderStatus(button.dataset.id, 'delivered');
+                                });
+                            });
+
+                        } else {
+                            ordersContainer.innerHTML = '<p class="text-center text-gray-500">No orders have been placed yet.</p>';
+                        }
+                    }, (error) => {
+                        console.error("Error fetching orders:", error);
+                        ordersContainer.innerHTML = '<p class="text-center text-red-500">Error fetching orders. Please check your permissions.</p>';
+                    });
+                } else {
+                    // Display a custom password error message
+                    const messageBox = document.createElement('div');
+                    messageBox.className = 'fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[100]';
+                    messageBox.innerHTML = `
+                        <div class="bg-white rounded-xl shadow-2xl p-6 max-w-sm text-center">
+                            <p class="text-red-500 font-bold mb-4">Incorrect Password</p>
+                            <p class="text-gray-800">Access denied. Please try again.</p>
+                            <button onclick="this.parentElement.parentElement.remove()" class="mt-4 bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700">OK</button>
+                        </div>
+                    `;
+                    document.body.appendChild(messageBox);
+                    passwordForm.reset();
+                }
+            });
+        };
+
+        // Initialize the whole application when the window loads
+        window.addEventListener('load', initFirebase);
+    </script>
 </body>
 </html>
