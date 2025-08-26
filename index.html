@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dih packs - Sticky Note Store</title>
+    <style>
+        /* CSS is embedded here for a single-file solution */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            background-color: #f0f0f0;
+            line-height: 1.6;
+            color: #333;
+        }
+        .site-header, .site-footer {
+            background-color: #2c2c2c;
+            color: #fff;
+            padding: 1rem 0;
+        }
+        .header-container, .section-container, .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .site-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .site-header nav ul {
+            list-style: none;
+        }
+        .site-header nav ul li {
+            display: inline-block;
+            margin-left: 2rem;
+        }
+        .site-header nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .site-header nav a:hover {
+            color: #a0a0a0;
+        }
+        .hero-section {
+            background-color: #fff;
+            text-align: center;
+            padding: 6rem 2rem;
+            border-bottom: 2px solid #ddd;
+        }
+        .hero-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        .hero-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #2c2c2c;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.75rem 2rem;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .cta-button:hover {
+            background-color: #000;
+        }
+        .products-section, .about-section, .contact-section {
+            padding: 4rem 0;
+        }
+        .products-section {
+            background-color: #f9f9f9;
+        }
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-card img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+        .product-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .price {
+            font-size: 1.25rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+        .description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .add-to-cart {
+            background-color: #2c2c2c;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .add-to-cart:hover {
+            background-color: #000;
+        }
+        .about-section {
+            background-color: #fff;
+            text-align: center;
+        }
+        .about-section p, .contact-section p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        .contact-section a {
+            color: #2c2c2c;
+            text-decoration: underline;
+        }
+        .site-footer {
+            text-align: center;
+            padding: 2rem 0;
+        }
+        @media (max-width: 768px) {
+            .site-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .site-header nav ul {
+                margin-top: 1rem;
+            }
+            .site-header nav ul li {
+                margin: 0 0.5rem;
+            }
+            .hero-content h2 {
+                font-size: 2rem;
+            }
+            .section-container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-container">
+            <h1>dih packs</h1>
+            <nav>
+                <ul>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2>The sticky notes that stick with you.</h2>
+                <p>Explore our unique range of "dih" sticky note packs.</p>
+                <a href="#products" class="cta-button">Shop Now</a>
+            </div>
+        </section>
+
+        <section id="products" class="products-section">
+            <div class="section-container">
+                <h2>Our Packs</h2>
+                <div class="product-grid">
+
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/300x300?text=dih+pack+standard" alt="dih pack standard">
+                        <h3>dih pack standard</h3>
+                        <p class="price">$5.99</p>
+                        <p class="description">Classic sticky notes for all your note-taking needs. 100 sheets per pad.</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/300x300?text=dih+pack+dihformed" alt="dih pack dihformed">
+                        <h3>dih pack dihformed</h3>
+                        <p class="price">$7.99</p>
+                        <p class="description">Uniquely shaped sticky notes for creative thinkers. Assorted shapes.</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/300x300?text=dih+pack+dihcolored" alt="dih pack dihcolored">
+                        <h3>dih pack dihcolored</h3>
+                        <p class="price">$6.99</p>
+                        <p class="description">A vibrant mix of colors to brighten up your desk. 5 pads per pack.</p>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="section-container">
+                <h2>About Us</h2>
+                <p>At dih packs, we believe in the power of a good sticky note. We create unique, high-quality sticky notes that help you stay organized and express your creativity. Our "dih" brand is all about embracing the unconventional and finding new ways to make your ideas stick.</p>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <div class="section-container">
+                <h2>Get In Touch</h2>
+                <p>Have a question or just want to say hi? Contact us at <a href="mailto:hello@dihpacks.com">hello@dihpacks.com</a>.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <p>&copy; 2025 dih packs. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
